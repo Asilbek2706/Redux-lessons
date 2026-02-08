@@ -1,4 +1,5 @@
 import type {IUser} from "../shared/interfaces/user.interface.ts";
+import {ActionType} from "./actionType.ts";
 
 interface IState {
     currentUser: IUser | null;
@@ -10,12 +11,6 @@ const initialState: IState = {
     currentUser: null,
     isLoading: false,
     error: null,
-}
-
-export enum ActionType {
-    UserRequest = 'USER_REQUEST',
-    UserSuccess = 'USER_SUCCESS',
-    UserFailure = 'USER_FAILURE',
 }
 
 interface IAction {
