@@ -1,21 +1,18 @@
 import {connect, type ConnectedProps} from "react-redux";
 import {useEffect} from "react";
 import type {RootState} from "../redux/store.ts";
-import {setUser} from "../redux/actions.ts";
+import { userSuccess } from "../redux/actions.ts";
 
 type ReduxProps = ConnectedProps<typeof connector>;
-type ComponentProps = {
-    isActive: boolean;
-}
 
-type Props = ReduxProps & ComponentProps
+type IProps = ReduxProps;
 
-function Profile(props: Props) {
+function Profile(props: IProps) {
     console.log(props)
 
     useEffect(() => {
         setTimeout(() => {
-            props.setUser({
+            props.userSuccess({
                 name: 'Asilbek',
                 id: '123',
                 roles: ['admin'],
@@ -31,7 +28,7 @@ function Profile(props: Props) {
 const mapStateToProps = (state: RootState) => state;
 
 const mapDispatchToProps = {
-    setUser,
+    userSuccess,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

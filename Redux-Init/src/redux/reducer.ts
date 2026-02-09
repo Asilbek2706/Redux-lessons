@@ -13,10 +13,21 @@ const initialState: IState = {
     error: null,
 }
 
-interface IAction {
-    type: ActionType;
-    payload: true;
+type IUserRequestAction = {
+    type: ActionType.UserRequest;
 }
+
+type IUserSuccessAction = {
+    type: ActionType.UserSuccess;
+    payload: IUser;
+}
+
+type IUserFailureAction = {
+    type: ActionType.UserFailure;
+    payload: Error;
+}
+
+type IAction = IUserRequestAction | IUserSuccessAction | IUserFailureAction;
 
 function reducer(state = initialState, action: IAction) {
     console.log(action);
@@ -30,7 +41,7 @@ function reducer(state = initialState, action: IAction) {
         case ActionType.UserSuccess:
             return {
                 ...state,
-                isLoading: true,
+                isLoading: false,
                 currentUser: action.payload,
             }
         case ActionType.UserFailure:
