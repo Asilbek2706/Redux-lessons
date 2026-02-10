@@ -1,5 +1,5 @@
-import type {IUser} from "../shared/interfaces/user.interface.ts";
-import {ActionType} from "./actionType.ts";
+import type {IUser} from "../../shared/interfaces/user.interface.ts";
+import {ActionType} from "../actions/actionType.ts";
 
 interface IState {
     currentUser: IUser | null;
@@ -29,7 +29,7 @@ type IUserFailureAction = {
 
 type IAction = IUserRequestAction | IUserSuccessAction | IUserFailureAction;
 
-function reducer(state = initialState, action: IAction) {
+function userReducer(state = initialState, action: IAction) {
     console.log(action);
     switch (action.type) {
         case ActionType.UserRequest:
@@ -55,4 +55,4 @@ function reducer(state = initialState, action: IAction) {
     }
 }
 
-export default reducer
+export default userReducer

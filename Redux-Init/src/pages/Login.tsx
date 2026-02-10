@@ -1,5 +1,5 @@
 import type {RootState} from "../redux/store.ts";
-import {userRequest, userSuccess} from "../redux/actions.ts";
+import {userRequest, userSuccess} from "../redux/actions/user.actions.ts";
 import {connect, type ConnectedProps} from "react-redux";
 
 const Login = ({ isLoading,

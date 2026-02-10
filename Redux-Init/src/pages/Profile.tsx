@@ -1,28 +1,11 @@
-import {connect, type ConnectedProps} from "react-redux";
-import {useEffect} from "react";
+import {connect} from "react-redux";
 import type {RootState} from "../redux/store.ts";
-import { userSuccess } from "../redux/actions.ts";
+import { userSuccess } from "../redux/actions/user.actions.ts";
+import {Outlet} from "react-router-dom";
 
-type ReduxProps = ConnectedProps<typeof connector>;
 
-type IProps = ReduxProps;
-
-function Profile(props: IProps) {
-    console.log(props)
-
-    useEffect(() => {
-        setTimeout(() => {
-            props.userSuccess({
-                name: 'Asilbek',
-                id: '123',
-                roles: ['admin'],
-            })
-        }, 5000)
-    }, [])
-
-    return (
-        <h1>Asilbek Karomatov's Profile page</h1>
-    );
+function Profile() {
+    return <Outlet />
 }
 
 const mapStateToProps = (state: RootState) => state;

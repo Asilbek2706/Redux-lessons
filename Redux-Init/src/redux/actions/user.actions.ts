@@ -1,4 +1,4 @@
-import type {IUser} from "../shared/interfaces/user.interface.ts";
+import type {IUser} from "../../shared/interfaces/user.interface.ts";
 
 import {ActionType} from "./actionType.ts";
 

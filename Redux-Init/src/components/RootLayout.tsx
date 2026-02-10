@@ -7,12 +7,8 @@ function RootLayout({user}: ConnectedProps<typeof connector>) {
         <>
             <nav>
                 <Link to="/">Home</Link>
-                <Link to="/about">About</Link>
-                <Link to="/contact">Contact</Link>
-                <Link to="/admin">Admin</Link>
-                <Link to={'/blog/angular-haqida'}>Angular haqida</Link>
                 {
-                    user && <a href={"#"}>{user.name}</a>
+                    user && <Link to={'/profile/payments'}>{user.name} (payments) </Link>
                 }
             </nav>
             <Outlet />
@@ -21,7 +17,7 @@ function RootLayout({user}: ConnectedProps<typeof connector>) {
 }
 
 const mapStateToProps = (state: RootState) => ({
-    user: state.currentUser,
+    user: state.user.currentUser,
 })
 
 const connector = connect(mapStateToProps, null)
