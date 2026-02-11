@@ -1,12 +1,11 @@
-import type {RootState} from "../redux/store.ts";
 import {userRequest, userSuccess} from "../redux/actions/user.actions.ts";
-import {connect, type ConnectedProps} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import type {RootState} from "../redux/store.ts";
 
-const Login = ({ isLoading,
-               dispatch
-               }: ConnectedProps<typeof connector>) => {
+const Login = () => {
 
-    console.log(isLoading);
+    const dispatch = useDispatch();
+    const isLoading = useSelector((state: RootState) => state.user.isLoading);
 
     const handleLogin = () => {
         dispatch(userRequest());
@@ -31,10 +30,5 @@ const Login = ({ isLoading,
     )
 }
 
-const mapStateToProps = (state: RootState) => ({
-    isLoading: state.isLoading,
-});
 
-const connector = connect(mapStateToProps);
-
-export default connector(Login)
+export default Login

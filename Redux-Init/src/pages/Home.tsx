@@ -1,10 +1,13 @@
-import {connect, type ConnectedProps} from "react-redux";
 import {useEffect} from "react";
 import {userSuccess} from "../redux/actions/user.actions.ts";
-import type {RootState} from "../redux/store.ts";
 import {paymentSucceess} from "../redux/actions/payment.actions.ts";
+import {useDispatch, useSelector} from "react-redux";
+import type {RootState} from "../redux/store.ts";
 
-const Home = ({user, dispatch}: ConnectedProps<typeof connector>) => {
+const Home = () => {
+
+    const dispatch = useDispatch();
+    const user = useSelector((state: RootState) => state.user.currentUser);
 
     useEffect(() => {
         setTimeout(() => {
@@ -15,6 +18,7 @@ const Home = ({user, dispatch}: ConnectedProps<typeof connector>) => {
             }))
         }, 2000)
     }, [dispatch]);
+
 
     useEffect(() => {
         if (user) {
@@ -40,10 +44,4 @@ const Home = ({user, dispatch}: ConnectedProps<typeof connector>) => {
     )
 }
 
-const mapStateToProps = (state: RootState) => ({
-    user: state.user.currentUser
-})
-
-const connector = connect(mapStateToProps);
-
-export default connector(Home);
+export default Home;

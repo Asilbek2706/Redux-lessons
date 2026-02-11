@@ -1,8 +1,11 @@
 import {Link, Outlet} from "react-router-dom";
+import {useSelector} from "react-redux";
 import type {RootState} from "../redux/store.ts";
-import {connect, type ConnectedProps} from "react-redux";
 
-function RootLayout({user}: ConnectedProps<typeof connector>) {
+function RootLayout() {
+
+    const user = useSelector((state: RootState) => state.user.currentUser);
+
     return(
         <>
             <nav>
@@ -16,10 +19,4 @@ function RootLayout({user}: ConnectedProps<typeof connector>) {
     )
 }
 
-const mapStateToProps = (state: RootState) => ({
-    user: state.user.currentUser,
-})
-
-const connector = connect(mapStateToProps, null)
-
-export default connector(RootLayout);
+export default RootLayout
