@@ -1,23 +1,14 @@
-import {userRequest, userSuccess} from "../redux/actions/user.actions.ts";
 import {useDispatch, useSelector} from "react-redux";
-import type {RootState} from "../redux/store.ts";
+import type {AppDispatch, RootState} from "../redux/store.ts";
+import {fetchUser} from "../redux/reducers/user.reducer.ts";
 
 const Login = () => {
 
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const isLoading = useSelector((state: RootState) => state.user.isLoading);
 
     const handleLogin = () => {
-        dispatch(userRequest());
-        setTimeout(() => {
-            dispatch(
-                userSuccess({
-                    id: '12345',
-                    name: 'Asilbek',
-                    roles: ['admin'],
-                })
-            )
-        }, 3000)
+        dispatch(fetchUser('123'))
     }
 
     return (

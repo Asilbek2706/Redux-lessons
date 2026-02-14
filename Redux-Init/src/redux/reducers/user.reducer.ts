@@ -1,5 +1,6 @@
 import type {IUser} from "../../shared/interfaces/user.interface.ts";
-import {ActionType} from "../actions/actionType.ts";
+import {createAsyncThunk, createSlice, type PayloadAction} from "@reduxjs/toolkit";
+import {fetchUserById} from "../../services/user.service.ts";
 
 interface IState {
     currentUser: IUser | null;
@@ -13,46 +14,37 @@ const initialState: IState = {
     error: null,
 }
 
-type IUserRequestAction = {
-    type: ActionType.UserRequest;
-}
-
-type IUserSuccessAction = {
-    type: ActionType.UserSuccess;
-    payload: IUser;
-}
-
-type IUserFailureAction = {
-    type: ActionType.UserFailure;
-    payload: Error;
-}
-
-type IAction = IUserRequestAction | IUserSuccessAction | IUserFailureAction;
-
-function userReducer(state = initialState, action: IAction) {
-    console.log(action);
-    switch (action.type) {
-        case ActionType.UserRequest:
-            return {
-                ...state,
-                isLoading: true,
-                error: null,
-            }
-        case ActionType.UserSuccess:
-            return {
-                ...state,
-                isLoading: false,
-                currentUser: action.payload,
-            }
-        case ActionType.UserFailure:
-            return {
-                ...state,
-                isLoading: false,
-                error: action.payload,
-            }
-        default:
-            return state
+export const fetchUser = createAsyncThunk<IUser, string>(
+    "user/fetchById",
+    async (userId) => {
+        return fetchUserById(userId);
     }
-}
+)
 
-export default userReducer
+export const userSlice = createSlice({
+    name: 'user',
+    initialState,
+    reducers: {
+        userRequest: (state: IState) => {
+            state.isLoading = true;
+        },
+        userSuccess: (state: IState, action: PayloadAction<IUser>) => {
+            state.currentUser = action.payload;
+        },
+        userFailure: (state: IState, action: PayloadAction<IUser>) => {
+            state.error = action.payload;
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchUser.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(fetchUser.fulfilled, (state, action) => {
+            state.currentUser = action.payload;
+            state.isLoading = false;
+        });
+    },
+});
+
+export const { userRequest, userSuccess, userFailure } = userSlice.actions;
+export default userSlice.reducer;

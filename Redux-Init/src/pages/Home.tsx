@@ -1,34 +1,29 @@
-import { useEffect } from 'react';
-import { paymentSucceess } from '../redux/actions/payment.actions.ts';
-import { fetchUser } from '../redux/actions/user.actions.ts';
-import { useAppDispatch, useAppSelector } from '../hooks/thunk.hooks.tsx';
+import type {AppDispatch, RootState} from "../redux/store.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {fetchUser} from "../redux/reducers/user.reducer.ts";
+import {paymentSuccess} from "../redux/reducers/payment.reducer.ts";
+
 const Home = () => {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user.currentUser);
-  const isLoading = useAppSelector((state) => state.user.isLoading);
+  const isLoading = useSelector((state: RootState) => state.user.isLoading);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUser());
+    dispatch(fetchUser('123'))
   }, [dispatch]);
 
   useEffect(() => {
-    if (user) {
-      dispatch(
-        paymentSucceess([
-          {
-            id: '1230',
-            amount: '200$',
-            date: '10.02.2026',
-          },
-          {
-            id: '1231',
-            amount: '300$',
-            date: '12.02.2026',
-          },
-        ])
-      );
+    if (currentUser) {
+      dispatch(paymentSuccess([
+        {
+          id: '123',
+          amount: '400$',
+          date: '2000-01-01',
+        },
+      ]));
     }
-  }, [user, dispatch]);
+  }, [currentUser, dispatch]);
 
   return isLoading ? <h3>Loading...</h3> : <h1>Asilbek's HomePage</h1>;
 };
